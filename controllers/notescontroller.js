@@ -35,11 +35,14 @@ router.get('/:id', async (req, res) => {
     try {
         const results = await models.NotesModel.findOne({
             where: {
-                id: id
+                trackerId: id
             }
         })
         if (!results) { res.status(404).json('There are no notes with this ID') }
-        res.status(200).json({ message: `Character found`, results: results })
+        else {
+            res.status(200).json({ message: `Character found`, results: results })
+        }
+
     } catch (err) {
         res.status(500).json({ message: `Failed retrieve notes. Error: ${err}` })
     }
@@ -50,13 +53,14 @@ router.put('/:id', validateJWT, async (req, res) => {
         text,
         priority
 
-    } = req.body.notes;
+    } = req.body;
     const { id } = req.params
     const query = {
         where: {
             id: id
         }
     }
+
 
     const updatedNotes = {
         text,

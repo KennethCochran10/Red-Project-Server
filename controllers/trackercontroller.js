@@ -11,7 +11,7 @@ router.post('/create', validateJWT, async (req, res) => {
     const { company, title, salary, contactInfo, haveIContacted, haveTheyContacted } = req.body.tracker;
 
     try {
-        models.TrackerModel.create({
+        const newTracker = await models.TrackerModel.create({
             company: company,
             title: title,
             salary: salary,
@@ -21,25 +21,16 @@ router.post('/create', validateJWT, async (req, res) => {
             userId: req.user.id
 
         })
-            .then(
-                tracker => {
-                    res.status(201).json({
-                        tracker: tracker,
-                        message: 'New Job Tracker successfully created!'
-                    });
-                }
-            ).catch(error => { console.log(error) })
+
+        res.status(201).json({
+            message: 'Tracker created succesfully!'
+        })
     } catch (err) {
-        console.log(error)
-        res.status(500).json
+        res.status(400).json({
+            message: `failed to create tracker Error: ${err}`
+        })
+    }
 
-            ({
-                error: `Failed to create Job tracker: ${err}`
-
-            });
-
-
-    };
 });
 router.get('/', validateJWT, async (req, res) => {
     const { id } = req.params;
@@ -91,7 +82,7 @@ router.put('/:id', validateJWT, async (req, res) => {
         haveIContacted,
         haveTheyContacted
 
-    } = req.body.tracker;
+    } = req.body;
     const { id } = req.params
     const query = {
         where: {

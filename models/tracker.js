@@ -12,12 +12,12 @@ const Tracker = db.define("tracker", {
 
     company: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
 
     title: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
 
     salary: {
@@ -27,7 +27,7 @@ const Tracker = db.define("tracker", {
 
     contactInfo: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
     },
 
     haveIContacted: {
