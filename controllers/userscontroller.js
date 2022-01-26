@@ -77,16 +77,7 @@ router.post('/login', async (req, res) => {
 router.get('/userinfo', async (req, res) => {
     try {
         await models.UsersModel.findAll({
-            include: [
-                {
-                    model: models.TrackerModel,
-                    include: [
-                        {
-                            model: models.NotesModel
-                        }
-                    ]
-                }
-            ]
+
         })
             .then(
                 users => {
